@@ -234,4 +234,10 @@ public class StateMachine extends StateMachineBase {
         }
     }
 
+
+    @Override
+    protected void onProducts_ProductsList2Action(Component c, ActionEvent event) {
+        ParseObject object = (ParseObject) ((HashMap<String, Object>) findProductsList2().getSelectedItem()).get("object");
+        Dialog.show(object.getString("name"), object.getString("description"), "Ok", null);
+    }
 }
