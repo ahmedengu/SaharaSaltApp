@@ -13,5 +13,7 @@
       <stringItem value="10" />
       <stringItem value="20" />
     </component>
+    <component type="Button" name="Button" cloudDestinationProperty="Button" commandName="Choose Dest" commandId="2" commandAction="Dest" commandBack="false" text="Choose Dest" >
+    </component>
   </component>
 </component>

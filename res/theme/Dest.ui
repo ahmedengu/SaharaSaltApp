@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" name="Dest" cloudDestinationProperty="Dest" layout="BorderLayout" borderLayoutAbsoluteCenter="false" title="Dest" >
+  <component type="Button" name="Button" cloudDestinationProperty="Button" commandName="Order" commandId="1" commandAction="Main" commandBack="false" text="Order" >
+    <layoutConstraint value="South" />
+  </component>
+</component>

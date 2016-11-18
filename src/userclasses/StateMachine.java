@@ -16,6 +16,7 @@ import com.codename1.maps.providers.GoogleMapsProvider;
 import com.codename1.ui.*;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import generated.StateMachineBase;
@@ -68,23 +69,7 @@ public class StateMachine extends StateMachineBase {
 
     @Override
     protected void beforeMain(Form f) {
-        MapContainer map = new MapContainer(new GoogleMapsProvider("AIzaSyAxlzXskkl3KKdjZUuFrV-j8oFjWOjtTIQ"));
-        map.setRotateGestureEnabled(true);
-        Location lastKnownLocation = LocationManager.getLocationManager().getLastKnownLocation();
-        if (lastKnownLocation != null)
-            destCoord = new Coord(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-        map.zoom(destCoord, 5);
-        if (!map.isNativeMaps())
-            updateMarkers(map);
-        map.setShowMyLocation(true);
 
-        map.addTapListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                destCoord = map.getCoordAtPosition(evt.getX(), evt.getY());
-                updateMarkers(map);
-            }
-        });
-        findContainer(f).add(map);
     }
 
     private void updateMarkers(MapContainer map) {
@@ -102,4 +87,24 @@ public class StateMachine extends StateMachineBase {
     }
 
 
+    @Override
+    protected void beforeDest(Form f) {
+        MapContainer map = new MapContainer(new GoogleMapsProvider("AIzaSyAxlzXskkl3KKdjZUuFrV-j8oFjWOjtTIQ"));
+        map.setRotateGestureEnabled(true);
+        Location lastKnownLocation = LocationManager.getLocationManager().getLastKnownLocation();
+        if (lastKnownLocation != null)
+            destCoord = new Coord(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+        map.zoom(destCoord, 5);
+        if (!map.isNativeMaps())
+            updateMarkers(map);
+        map.setShowMyLocation(true);
+
+        map.addTapListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                destCoord = map.getCoordAtPosition(evt.getX(), evt.getY());
+                updateMarkers(map);
+            }
+        });
+        f.add(BorderLayout.CENTER, map);
+    }
 }

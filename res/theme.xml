@@ -60,6 +60,7 @@
     <image name="ComboBox.sel#borderTop_1.png" type="multi"  />
     <image name="ComboBox.sel#borderTopL_1.png" type="multi"  />
     <image name="ComboBox.sel#borderTopR_1.png" type="multi"  />
+    <ui name="Dest" />
     <image name="Dialog.borderBottom_1.png" type="multi"  />
     <image name="Dialog.borderBottom_1.png1" type="multi"  />
     <image name="Dialog.borderBottomL_1.png" type="multi"  />
