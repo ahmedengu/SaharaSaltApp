@@ -7,6 +7,8 @@
 
 package userclasses;
 
+import com.codename1.components.InfiniteProgress;
+import com.codename1.components.MultiButton;
 import com.codename1.components.ToastBar;
 import com.codename1.googlemaps.MapContainer;
 import com.codename1.location.Location;
@@ -17,9 +19,17 @@ import com.codename1.ui.*;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.list.DefaultListModel;
+import com.codename1.ui.list.GenericListCellRenderer;
+import com.codename1.ui.list.MultiList;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.parse4cn1.*;
 import generated.StateMachineBase;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.codename1.ui.FontImage.createMaterial;
 
@@ -28,7 +38,9 @@ import static com.codename1.ui.FontImage.createMaterial;
  */
 public class StateMachine extends StateMachineBase {
     private static Coord destCoord;
-    private static int price;
+    private static List<ParseObject> products;
+    public static Dialog InifiniteBlocking;
+    ComboBox<Map<String, Object>> combo;
 
     public StateMachine(String resFile) {
         super(resFile);
@@ -41,13 +53,14 @@ public class StateMachine extends StateMachineBase {
      * the constructor/class scope to avoid race conditions
      */
     protected void initVars(Resources res) {
+        Parse.initialize("http://parseapi.back4app.com", "lobm9iv5JEInshlHRHGyxbzsKT29LBI4wqem4x5F", "cXSPm8nwJsnlebu1cNnhUuMgj9Jf4DY6ihk5x4JW");
     }
 
 
     @Override
     protected void onMain_OrderAction(Component c, ActionEvent event) {
-        price = Integer.parseInt((String) findComboBox().getSelectedItem());
-
+        ParseObject product = (ParseObject) ((HashMap<String, Object>) combo.getSelectedItem()).get("object");
+        int price = product.getInt("price");
         if (destCoord == null) {
             ToastBar.showErrorMessage("Choose dest");
             return;
@@ -60,17 +73,23 @@ public class StateMachine extends StateMachineBase {
             ToastBar.showErrorMessage("Choose item");
             return;
         }
-        int total = Integer.parseInt(findQuantity().getText()) * price;
+        int quantity = Integer.parseInt(findQuantity().getText());
+        int total = quantity * price;
         if (Dialog.show("confirm", "Total: " + total, "Ok", "Cancel")) {
-            showForm("Pay", null);
+            ParseObject order = ParseObject.create("Orders");
+            order.put("quantity", quantity);
+            order.put("product", product);
+            order.put("destination", new ParseGeoPoint(destCoord.getLatitude(), destCoord.getLongitude()));
+            order.put("user", ParseUser.getCurrent());
+            try {
+                order.save();
+                ToastBar.showErrorMessage("Sent to server");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-
-    @Override
-    protected void beforeMain(Form f) {
-
-    }
 
     private void updateMarkers(MapContainer map) {
         map.clearMapLayers();
@@ -106,4 +125,113 @@ public class StateMachine extends StateMachineBase {
         });
         f.add(BorderLayout.CENTER, map);
     }
+
+    @Override
+    protected void onLogin_LoginAction(Component c, ActionEvent event) {
+        try {
+            ParseUser user = ParseUser.create(findEmail().getText(), findPassword().getText());
+//            showProgress();
+            user.login();
+            getProducts();
+//            hideProgress();
+            showForm("Main", null);
+        } catch (ParseException e) {
+//            hideProgress();
+            e.printStackTrace();
+            ToastBar.showErrorMessage(e.getMessage());
+        }
+
+    }
+
+    @Override
+    protected void onLogin_RegisterAction(Component c, ActionEvent event) {
+        try {
+            ParseUser user = ParseUser.create(findEmail().getText(), findPassword().getText());
+            user.put("email", findEmail().getText());
+//            showProgress();
+            user.signUp();
+            getProducts();
+//            hideProgress();
+            showForm("Main", null);
+        } catch (ParseException e) {
+//            hideProgress();
+            e.printStackTrace();
+            ToastBar.showErrorMessage(e.getMessage());
+        }
+
+    }
+
+    public static void showProgress() {
+        if (InifiniteBlocking == null)
+            InifiniteBlocking = new InfiniteProgress().showInifiniteBlocking();
+        InifiniteBlocking.show();
+    }
+
+    public static void hideProgress() {
+        if (InifiniteBlocking != null)
+            InifiniteBlocking.dispose();
+    }
+
+    public void getProducts() {
+        ParseQuery o = ParseQuery.getQuery("Products");
+        try {
+            products = o.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            ToastBar.showErrorMessage(e.getMessage());
+        }
+    }
+
+    protected boolean initListModelProductsList(MultiList cmp) {
+        cmp.setModel(getDefaultListModel());
+        return true;
+    }
+
+    public static EncodedImage Icon() {
+        Style s = new Style();
+        s.setBgTransparency(0);
+        s.setFgColor(0x0000FF);
+        return createMaterial(FontImage.MATERIAL_INSERT_PHOTO, s).toEncodedImage();
+    }
+
+    private DefaultListModel getDefaultListModel() {
+        HashMap<String, Object>[] model = new HashMap[products.size()];
+        for (int i = 0; i < products.size(); i++) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("Line1", products.get(i).get("name"));
+            map.put("Line2", products.get(i).get("price"));
+            String url = products.get(i).getParseFile("pic").getUrl();
+            URLImage image = URLImage.createToStorage(Icon(), "pic_" + url.substring(url.lastIndexOf("/") + 1), url);
+
+            map.put("icon", image);
+
+            map.put("object", products.get(i));
+            model[i] = map;
+        }
+        return new DefaultListModel(model);
+    }
+
+    @Override
+    protected void beforeProducts(Form f) {
+        initListModelProductsList(findProductsList2(f));
+    }
+
+    @Override
+    protected void beforeMain(Form f) {
+        combo = new ComboBox<>(getDefaultListModel());
+        combo.setRenderer(new GenericListCellRenderer<>(new MultiButton(), new MultiButton()));
+        findContainer(f).add(combo);
+    }
+
+    @Override
+    protected void onLogin_ResetAction(Component c, ActionEvent event) {
+        try {
+            ParseUser.requestPasswordReset(findEmail().getText());
+            ToastBar.showErrorMessage("Pass reset done");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            ToastBar.showErrorMessage(e.getMessage());
+        }
+    }
+
 }

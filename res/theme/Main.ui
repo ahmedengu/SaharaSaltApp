@@ -10,10 +10,5 @@
     </component>
     <component type="TextField" name="Quantity" cloudBoundProperty="text" cloudDestinationProperty="Quantity" text="" constraint="2" hint="Quantity" >
     </component>
-    <component type="ComboBox" name="ComboBox" cloudDestinationProperty="ComboBox" >
-      <stringItem value="5" />
-      <stringItem value="10" />
-      <stringItem value="20" />
-    </component>
   </component>
 <command name="Products" id="3" action="Products" backCommand="false" /></component>

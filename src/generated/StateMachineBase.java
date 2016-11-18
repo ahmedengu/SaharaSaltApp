@@ -34,10 +34,8 @@ public abstract class StateMachineBase extends UIBuilder {
     public Container startApp(Resources res, String resPath, boolean loadTheme) {
         initVars();
         UIBuilder.registerCustomComponent("Container", com.codename1.ui.Container.class);
-        UIBuilder.registerCustomComponent("WebBrowser", com.codename1.components.WebBrowser.class);
         UIBuilder.registerCustomComponent("Form", com.codename1.ui.Form.class);
         UIBuilder.registerCustomComponent("Button", com.codename1.ui.Button.class);
-        UIBuilder.registerCustomComponent("ComboBox", com.codename1.ui.ComboBox.class);
         UIBuilder.registerCustomComponent("TextField", com.codename1.ui.TextField.class);
         UIBuilder.registerCustomComponent("MultiList", com.codename1.ui.list.MultiList.class);
         if(loadTheme) {
@@ -69,16 +67,14 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
     protected String getFirstFormName() {
-        return "Main";
+        return "Login";
     }
 
     public Container createWidget(Resources res, String resPath, boolean loadTheme) {
         initVars();
         UIBuilder.registerCustomComponent("Container", com.codename1.ui.Container.class);
-        UIBuilder.registerCustomComponent("WebBrowser", com.codename1.components.WebBrowser.class);
         UIBuilder.registerCustomComponent("Form", com.codename1.ui.Form.class);
         UIBuilder.registerCustomComponent("Button", com.codename1.ui.Button.class);
-        UIBuilder.registerCustomComponent("ComboBox", com.codename1.ui.ComboBox.class);
         UIBuilder.registerCustomComponent("TextField", com.codename1.ui.TextField.class);
         UIBuilder.registerCustomComponent("MultiList", com.codename1.ui.list.MultiList.class);
         if(loadTheme) {
@@ -89,7 +85,7 @@ public abstract class StateMachineBase extends UIBuilder {
             }
             initTheme(res);
         }
-        return createContainer(resPath, "Main");
+        return createContainer(resPath, "Login");
     }
 
     protected void initTheme(Resources res) {
@@ -130,50 +126,26 @@ public abstract class StateMachineBase extends UIBuilder {
         return cmp;
     }
 
-    public com.codename1.ui.Container findContainer(Component root) {
-        return (com.codename1.ui.Container)findByName("Container", root);
+    public com.codename1.ui.TextField findEmail(Component root) {
+        return (com.codename1.ui.TextField)findByName("Email", root);
     }
 
-    public com.codename1.ui.Container findContainer() {
-        com.codename1.ui.Container cmp = (com.codename1.ui.Container)findByName("Container", Display.getInstance().getCurrent());
+    public com.codename1.ui.TextField findEmail() {
+        com.codename1.ui.TextField cmp = (com.codename1.ui.TextField)findByName("Email", Display.getInstance().getCurrent());
         if(cmp == null && aboutToShowThisContainer != null) {
-            cmp = (com.codename1.ui.Container)findByName("Container", aboutToShowThisContainer);
+            cmp = (com.codename1.ui.TextField)findByName("Email", aboutToShowThisContainer);
         }
         return cmp;
     }
 
-    public com.codename1.components.WebBrowser findWebBrowser(Component root) {
-        return (com.codename1.components.WebBrowser)findByName("WebBrowser", root);
+    public com.codename1.ui.list.MultiList findProductsList2(Component root) {
+        return (com.codename1.ui.list.MultiList)findByName("ProductsList2", root);
     }
 
-    public com.codename1.components.WebBrowser findWebBrowser() {
-        com.codename1.components.WebBrowser cmp = (com.codename1.components.WebBrowser)findByName("WebBrowser", Display.getInstance().getCurrent());
+    public com.codename1.ui.list.MultiList findProductsList2() {
+        com.codename1.ui.list.MultiList cmp = (com.codename1.ui.list.MultiList)findByName("ProductsList2", Display.getInstance().getCurrent());
         if(cmp == null && aboutToShowThisContainer != null) {
-            cmp = (com.codename1.components.WebBrowser)findByName("WebBrowser", aboutToShowThisContainer);
-        }
-        return cmp;
-    }
-
-    public com.codename1.ui.Button findButton(Component root) {
-        return (com.codename1.ui.Button)findByName("Button", root);
-    }
-
-    public com.codename1.ui.Button findButton() {
-        com.codename1.ui.Button cmp = (com.codename1.ui.Button)findByName("Button", Display.getInstance().getCurrent());
-        if(cmp == null && aboutToShowThisContainer != null) {
-            cmp = (com.codename1.ui.Button)findByName("Button", aboutToShowThisContainer);
-        }
-        return cmp;
-    }
-
-    public com.codename1.ui.ComboBox findComboBox(Component root) {
-        return (com.codename1.ui.ComboBox)findByName("ComboBox", root);
-    }
-
-    public com.codename1.ui.ComboBox findComboBox() {
-        com.codename1.ui.ComboBox cmp = (com.codename1.ui.ComboBox)findByName("ComboBox", Display.getInstance().getCurrent());
-        if(cmp == null && aboutToShowThisContainer != null) {
-            cmp = (com.codename1.ui.ComboBox)findByName("ComboBox", aboutToShowThisContainer);
+            cmp = (com.codename1.ui.list.MultiList)findByName("ProductsList2", aboutToShowThisContainer);
         }
         return cmp;
     }
@@ -190,14 +162,74 @@ public abstract class StateMachineBase extends UIBuilder {
         return cmp;
     }
 
-    public com.codename1.ui.list.MultiList findMultiList(Component root) {
-        return (com.codename1.ui.list.MultiList)findByName("MultiList", root);
+    public com.codename1.ui.Component findLogin(Component root) {
+        return (com.codename1.ui.Component)findByName("Login", root);
     }
 
-    public com.codename1.ui.list.MultiList findMultiList() {
-        com.codename1.ui.list.MultiList cmp = (com.codename1.ui.list.MultiList)findByName("MultiList", Display.getInstance().getCurrent());
+    public com.codename1.ui.Component findLogin() {
+        com.codename1.ui.Component cmp = (com.codename1.ui.Component)findByName("Login", Display.getInstance().getCurrent());
         if(cmp == null && aboutToShowThisContainer != null) {
-            cmp = (com.codename1.ui.list.MultiList)findByName("MultiList", aboutToShowThisContainer);
+            cmp = (com.codename1.ui.Component)findByName("Login", aboutToShowThisContainer);
+        }
+        return cmp;
+    }
+
+    public com.codename1.ui.Container findContainer(Component root) {
+        return (com.codename1.ui.Container)findByName("Container", root);
+    }
+
+    public com.codename1.ui.Container findContainer() {
+        com.codename1.ui.Container cmp = (com.codename1.ui.Container)findByName("Container", Display.getInstance().getCurrent());
+        if(cmp == null && aboutToShowThisContainer != null) {
+            cmp = (com.codename1.ui.Container)findByName("Container", aboutToShowThisContainer);
+        }
+        return cmp;
+    }
+
+    public com.codename1.ui.Button findRegister(Component root) {
+        return (com.codename1.ui.Button)findByName("Register", root);
+    }
+
+    public com.codename1.ui.Button findRegister() {
+        com.codename1.ui.Button cmp = (com.codename1.ui.Button)findByName("Register", Display.getInstance().getCurrent());
+        if(cmp == null && aboutToShowThisContainer != null) {
+            cmp = (com.codename1.ui.Button)findByName("Register", aboutToShowThisContainer);
+        }
+        return cmp;
+    }
+
+    public com.codename1.ui.Button findButton(Component root) {
+        return (com.codename1.ui.Button)findByName("Button", root);
+    }
+
+    public com.codename1.ui.Button findButton() {
+        com.codename1.ui.Button cmp = (com.codename1.ui.Button)findByName("Button", Display.getInstance().getCurrent());
+        if(cmp == null && aboutToShowThisContainer != null) {
+            cmp = (com.codename1.ui.Button)findByName("Button", aboutToShowThisContainer);
+        }
+        return cmp;
+    }
+
+    public com.codename1.ui.Button findReset(Component root) {
+        return (com.codename1.ui.Button)findByName("Reset", root);
+    }
+
+    public com.codename1.ui.Button findReset() {
+        com.codename1.ui.Button cmp = (com.codename1.ui.Button)findByName("Reset", Display.getInstance().getCurrent());
+        if(cmp == null && aboutToShowThisContainer != null) {
+            cmp = (com.codename1.ui.Button)findByName("Reset", aboutToShowThisContainer);
+        }
+        return cmp;
+    }
+
+    public com.codename1.ui.TextField findPassword(Component root) {
+        return (com.codename1.ui.TextField)findByName("Password", root);
+    }
+
+    public com.codename1.ui.TextField findPassword() {
+        com.codename1.ui.TextField cmp = (com.codename1.ui.TextField)findByName("Password", Display.getInstance().getCurrent());
+        if(cmp == null && aboutToShowThisContainer != null) {
+            cmp = (com.codename1.ui.TextField)findByName("Password", aboutToShowThisContainer);
         }
         return cmp;
     }
@@ -248,14 +280,14 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
     protected void exitForm(Form f) {
-        if("Products".equals(f.getName())) {
-            exitProducts(f);
+        if("Login".equals(f.getName())) {
+            exitLogin(f);
             aboutToShowThisContainer = null;
             return;
         }
 
-        if("Pay".equals(f.getName())) {
-            exitPay(f);
+        if("Products".equals(f.getName())) {
+            exitProducts(f);
             aboutToShowThisContainer = null;
             return;
         }
@@ -276,11 +308,11 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
-    protected void exitProducts(Form f) {
+    protected void exitLogin(Form f) {
     }
 
 
-    protected void exitPay(Form f) {
+    protected void exitProducts(Form f) {
     }
 
 
@@ -293,14 +325,14 @@ public abstract class StateMachineBase extends UIBuilder {
 
     protected void beforeShow(Form f) {
     aboutToShowThisContainer = f;
-        if("Products".equals(f.getName())) {
-            beforeProducts(f);
+        if("Login".equals(f.getName())) {
+            beforeLogin(f);
             aboutToShowThisContainer = null;
             return;
         }
 
-        if("Pay".equals(f.getName())) {
-            beforePay(f);
+        if("Products".equals(f.getName())) {
+            beforeProducts(f);
             aboutToShowThisContainer = null;
             return;
         }
@@ -321,11 +353,11 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
-    protected void beforeProducts(Form f) {
+    protected void beforeLogin(Form f) {
     }
 
 
-    protected void beforePay(Form f) {
+    protected void beforeProducts(Form f) {
     }
 
 
@@ -338,14 +370,14 @@ public abstract class StateMachineBase extends UIBuilder {
 
     protected void beforeShowContainer(Container c) {
         aboutToShowThisContainer = c;
-        if("Products".equals(c.getName())) {
-            beforeContainerProducts(c);
+        if("Login".equals(c.getName())) {
+            beforeContainerLogin(c);
             aboutToShowThisContainer = null;
             return;
         }
 
-        if("Pay".equals(c.getName())) {
-            beforeContainerPay(c);
+        if("Products".equals(c.getName())) {
+            beforeContainerProducts(c);
             aboutToShowThisContainer = null;
             return;
         }
@@ -366,11 +398,11 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
-    protected void beforeContainerProducts(Container c) {
+    protected void beforeContainerLogin(Container c) {
     }
 
 
-    protected void beforeContainerPay(Container c) {
+    protected void beforeContainerProducts(Container c) {
     }
 
 
@@ -382,14 +414,14 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
     protected void postShow(Form f) {
-        if("Products".equals(f.getName())) {
-            postProducts(f);
+        if("Login".equals(f.getName())) {
+            postLogin(f);
             aboutToShowThisContainer = null;
             return;
         }
 
-        if("Pay".equals(f.getName())) {
-            postPay(f);
+        if("Products".equals(f.getName())) {
+            postProducts(f);
             aboutToShowThisContainer = null;
             return;
         }
@@ -410,11 +442,11 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
-    protected void postProducts(Form f) {
+    protected void postLogin(Form f) {
     }
 
 
-    protected void postPay(Form f) {
+    protected void postProducts(Form f) {
     }
 
 
@@ -426,14 +458,14 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
     protected void postShowContainer(Container c) {
-        if("Products".equals(c.getName())) {
-            postContainerProducts(c);
+        if("Login".equals(c.getName())) {
+            postContainerLogin(c);
             aboutToShowThisContainer = null;
             return;
         }
 
-        if("Pay".equals(c.getName())) {
-            postContainerPay(c);
+        if("Products".equals(c.getName())) {
+            postContainerProducts(c);
             aboutToShowThisContainer = null;
             return;
         }
@@ -454,11 +486,11 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
-    protected void postContainerProducts(Container c) {
+    protected void postContainerLogin(Container c) {
     }
 
 
-    protected void postContainerPay(Container c) {
+    protected void postContainerProducts(Container c) {
     }
 
 
@@ -470,14 +502,14 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
     protected void onCreateRoot(String rootName) {
-        if("Products".equals(rootName)) {
-            onCreateProducts();
+        if("Login".equals(rootName)) {
+            onCreateLogin();
             aboutToShowThisContainer = null;
             return;
         }
 
-        if("Pay".equals(rootName)) {
-            onCreatePay();
+        if("Products".equals(rootName)) {
+            onCreateProducts();
             aboutToShowThisContainer = null;
             return;
         }
@@ -498,11 +530,11 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
-    protected void onCreateProducts() {
+    protected void onCreateLogin() {
     }
 
 
-    protected void onCreatePay() {
+    protected void onCreateProducts() {
     }
 
 
@@ -515,14 +547,14 @@ public abstract class StateMachineBase extends UIBuilder {
 
     protected Hashtable getFormState(Form f) {
         Hashtable h = super.getFormState(f);
-        if("Products".equals(f.getName())) {
-            getStateProducts(f, h);
+        if("Login".equals(f.getName())) {
+            getStateLogin(f, h);
             aboutToShowThisContainer = null;
             return h;
         }
 
-        if("Pay".equals(f.getName())) {
-            getStatePay(f, h);
+        if("Products".equals(f.getName())) {
+            getStateProducts(f, h);
             aboutToShowThisContainer = null;
             return h;
         }
@@ -543,11 +575,11 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
-    protected void getStateProducts(Form f, Hashtable h) {
+    protected void getStateLogin(Form f, Hashtable h) {
     }
 
 
-    protected void getStatePay(Form f, Hashtable h) {
+    protected void getStateProducts(Form f, Hashtable h) {
     }
 
 
@@ -560,14 +592,14 @@ public abstract class StateMachineBase extends UIBuilder {
 
     protected void setFormState(Form f, Hashtable state) {
         super.setFormState(f, state);
-        if("Products".equals(f.getName())) {
-            setStateProducts(f, state);
+        if("Login".equals(f.getName())) {
+            setStateLogin(f, state);
             aboutToShowThisContainer = null;
             return;
         }
 
-        if("Pay".equals(f.getName())) {
-            setStatePay(f, state);
+        if("Products".equals(f.getName())) {
+            setStateProducts(f, state);
             aboutToShowThisContainer = null;
             return;
         }
@@ -588,11 +620,11 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
-    protected void setStateProducts(Form f, Hashtable state) {
+    protected void setStateLogin(Form f, Hashtable state) {
     }
 
 
-    protected void setStatePay(Form f, Hashtable state) {
+    protected void setStateProducts(Form f, Hashtable state) {
     }
 
 
@@ -605,20 +637,13 @@ public abstract class StateMachineBase extends UIBuilder {
 
     protected boolean setListModel(List cmp) {
         String listName = cmp.getName();
-        if("ComboBox".equals(listName)) {
-            return initListModelComboBox(cmp);
-        }
-        if("MultiList".equals(listName)) {
-            return initListModelMultiList(cmp);
+        if("ProductsList2".equals(listName)) {
+            return initListModelProductsList2(cmp);
         }
         return super.setListModel(cmp);
     }
 
-    protected boolean initListModelComboBox(List cmp) {
-        return false;
-    }
-
-    protected boolean initListModelMultiList(List cmp) {
+    protected boolean initListModelProductsList2(List cmp) {
         return false;
     }
 
@@ -631,9 +656,31 @@ public abstract class StateMachineBase extends UIBuilder {
             c = c.getParent().getLeadParent();
         }
         if(rootContainerName == null) return;
+        if(rootContainerName.equals("Login")) {
+            if("Email".equals(c.getName())) {
+                onLogin_EmailAction(c, event);
+                return;
+            }
+            if("Reset".equals(c.getName())) {
+                onLogin_ResetAction(c, event);
+                return;
+            }
+            if("Password".equals(c.getName())) {
+                onLogin_PasswordAction(c, event);
+                return;
+            }
+            if("Login".equals(c.getName())) {
+                onLogin_LoginAction(c, event);
+                return;
+            }
+            if("Register".equals(c.getName())) {
+                onLogin_RegisterAction(c, event);
+                return;
+            }
+        }
         if(rootContainerName.equals("Products")) {
-            if("MultiList".equals(c.getName())) {
-                onProducts_MultiListAction(c, event);
+            if("ProductsList2".equals(c.getName())) {
+                onProducts_ProductsList2Action(c, event);
                 return;
             }
         }
@@ -656,14 +703,25 @@ public abstract class StateMachineBase extends UIBuilder {
                 onMain_QuantityAction(c, event);
                 return;
             }
-            if("ComboBox".equals(c.getName())) {
-                onMain_ComboBoxAction(c, event);
-                return;
-            }
         }
     }
 
-      protected void onProducts_MultiListAction(Component c, ActionEvent event) {
+      protected void onLogin_EmailAction(Component c, ActionEvent event) {
+      }
+
+      protected void onLogin_ResetAction(Component c, ActionEvent event) {
+      }
+
+      protected void onLogin_PasswordAction(Component c, ActionEvent event) {
+      }
+
+      protected void onLogin_LoginAction(Component c, ActionEvent event) {
+      }
+
+      protected void onLogin_RegisterAction(Component c, ActionEvent event) {
+      }
+
+      protected void onProducts_ProductsList2Action(Component c, ActionEvent event) {
       }
 
       protected void onDest_ButtonAction(Component c, ActionEvent event) {
@@ -676,9 +734,6 @@ public abstract class StateMachineBase extends UIBuilder {
       }
 
       protected void onMain_QuantityAction(Component c, ActionEvent event) {
-      }
-
-      protected void onMain_ComboBoxAction(Component c, ActionEvent event) {
       }
 
 }
