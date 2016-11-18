@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" name="Main" cloudDestinationProperty="Main" layout="BorderLayout" borderLayoutAbsoluteCenter="false" title="Order" >
+  <component type="Button" name="Order" cloudDestinationProperty="Order" text="Order" >
+    <layoutConstraint value="South" />
+  </component>
+  <component type="Container" name="Container" cloudDestinationProperty="Container" scrollableY="true" layout="BoxLayout" boxLayoutAxis="Y" >
+    <layoutConstraint value="Center" />
+    <component type="TextField" name="Quantity" cloudBoundProperty="text" cloudDestinationProperty="Quantity" text="" constraint="2" hint="Quantity" >
+    </component>
+    <component type="ComboBox" name="ComboBox" cloudDestinationProperty="ComboBox" >
+      <stringItem value="5" />
+      <stringItem value="10" />
+      <stringItem value="20" />
+    </component>
+  </component>
+</component>

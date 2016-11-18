@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" name="Pay" cloudDestinationProperty="Pay" layout="BorderLayout" borderLayoutAbsoluteCenter="false" title="Pay" >
+  <component type="WebBrowser" name="WebBrowser" cloudDestinationProperty="WebBrowser" >
+    <layoutConstraint value="Center" />
+    <custom name="url" type="java.lang.String" value="http://paypal.com" />
+  </component>
+</component>
