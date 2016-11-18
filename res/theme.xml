@@ -110,6 +110,7 @@
     <image name="OKGR.borderTopL_1.png" type="multi"  />
     <image name="OKGR.borderTopR_1.png" type="multi"  />
     <ui name="Pay" />
+    <ui name="Products" />
     <image name="Radio_btn_Normal.png" type="multi"  />
     <image name="Radio_btn_Press.png" type="multi"  />
     <image name="round.png" type="multi"  />

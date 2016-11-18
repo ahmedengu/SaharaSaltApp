@@ -39,6 +39,7 @@ public abstract class StateMachineBase extends UIBuilder {
         UIBuilder.registerCustomComponent("Button", com.codename1.ui.Button.class);
         UIBuilder.registerCustomComponent("ComboBox", com.codename1.ui.ComboBox.class);
         UIBuilder.registerCustomComponent("TextField", com.codename1.ui.TextField.class);
+        UIBuilder.registerCustomComponent("MultiList", com.codename1.ui.list.MultiList.class);
         if(loadTheme) {
             if(res == null) {
                 try {
@@ -79,6 +80,7 @@ public abstract class StateMachineBase extends UIBuilder {
         UIBuilder.registerCustomComponent("Button", com.codename1.ui.Button.class);
         UIBuilder.registerCustomComponent("ComboBox", com.codename1.ui.ComboBox.class);
         UIBuilder.registerCustomComponent("TextField", com.codename1.ui.TextField.class);
+        UIBuilder.registerCustomComponent("MultiList", com.codename1.ui.list.MultiList.class);
         if(loadTheme) {
             if(res == null) {
                 try {
@@ -188,14 +190,31 @@ public abstract class StateMachineBase extends UIBuilder {
         return cmp;
     }
 
+    public com.codename1.ui.list.MultiList findMultiList(Component root) {
+        return (com.codename1.ui.list.MultiList)findByName("MultiList", root);
+    }
+
+    public com.codename1.ui.list.MultiList findMultiList() {
+        com.codename1.ui.list.MultiList cmp = (com.codename1.ui.list.MultiList)findByName("MultiList", Display.getInstance().getCurrent());
+        if(cmp == null && aboutToShowThisContainer != null) {
+            cmp = (com.codename1.ui.list.MultiList)findByName("MultiList", aboutToShowThisContainer);
+        }
+        return cmp;
+    }
+
     public static final int COMMAND_MainChooseDest = 2;
     public static final int COMMAND_DestOrder = 1;
+    public static final int COMMAND_MainProducts = 3;
 
     protected boolean onMainChooseDest() {
         return false;
     }
 
     protected boolean onDestOrder() {
+        return false;
+    }
+
+    protected boolean onMainProducts() {
         return false;
     }
 
@@ -215,6 +234,13 @@ public abstract class StateMachineBase extends UIBuilder {
                 }
                 break;
 
+            case COMMAND_MainProducts:
+                if(onMainProducts()) {
+                    ev.consume();
+                    return;
+                }
+                break;
+
         }
         if(ev.getComponent() != null) {
             handleComponentAction(ev.getComponent(), ev);
@@ -222,6 +248,12 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
     protected void exitForm(Form f) {
+        if("Products".equals(f.getName())) {
+            exitProducts(f);
+            aboutToShowThisContainer = null;
+            return;
+        }
+
         if("Pay".equals(f.getName())) {
             exitPay(f);
             aboutToShowThisContainer = null;
@@ -244,6 +276,10 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
+    protected void exitProducts(Form f) {
+    }
+
+
     protected void exitPay(Form f) {
     }
 
@@ -257,6 +293,12 @@ public abstract class StateMachineBase extends UIBuilder {
 
     protected void beforeShow(Form f) {
     aboutToShowThisContainer = f;
+        if("Products".equals(f.getName())) {
+            beforeProducts(f);
+            aboutToShowThisContainer = null;
+            return;
+        }
+
         if("Pay".equals(f.getName())) {
             beforePay(f);
             aboutToShowThisContainer = null;
@@ -279,6 +321,10 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
+    protected void beforeProducts(Form f) {
+    }
+
+
     protected void beforePay(Form f) {
     }
 
@@ -292,6 +338,12 @@ public abstract class StateMachineBase extends UIBuilder {
 
     protected void beforeShowContainer(Container c) {
         aboutToShowThisContainer = c;
+        if("Products".equals(c.getName())) {
+            beforeContainerProducts(c);
+            aboutToShowThisContainer = null;
+            return;
+        }
+
         if("Pay".equals(c.getName())) {
             beforeContainerPay(c);
             aboutToShowThisContainer = null;
@@ -314,6 +366,10 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
+    protected void beforeContainerProducts(Container c) {
+    }
+
+
     protected void beforeContainerPay(Container c) {
     }
 
@@ -326,6 +382,12 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
     protected void postShow(Form f) {
+        if("Products".equals(f.getName())) {
+            postProducts(f);
+            aboutToShowThisContainer = null;
+            return;
+        }
+
         if("Pay".equals(f.getName())) {
             postPay(f);
             aboutToShowThisContainer = null;
@@ -348,6 +410,10 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
+    protected void postProducts(Form f) {
+    }
+
+
     protected void postPay(Form f) {
     }
 
@@ -360,6 +426,12 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
     protected void postShowContainer(Container c) {
+        if("Products".equals(c.getName())) {
+            postContainerProducts(c);
+            aboutToShowThisContainer = null;
+            return;
+        }
+
         if("Pay".equals(c.getName())) {
             postContainerPay(c);
             aboutToShowThisContainer = null;
@@ -382,6 +454,10 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
+    protected void postContainerProducts(Container c) {
+    }
+
+
     protected void postContainerPay(Container c) {
     }
 
@@ -394,6 +470,12 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
     protected void onCreateRoot(String rootName) {
+        if("Products".equals(rootName)) {
+            onCreateProducts();
+            aboutToShowThisContainer = null;
+            return;
+        }
+
         if("Pay".equals(rootName)) {
             onCreatePay();
             aboutToShowThisContainer = null;
@@ -416,6 +498,10 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
+    protected void onCreateProducts() {
+    }
+
+
     protected void onCreatePay() {
     }
 
@@ -429,6 +515,12 @@ public abstract class StateMachineBase extends UIBuilder {
 
     protected Hashtable getFormState(Form f) {
         Hashtable h = super.getFormState(f);
+        if("Products".equals(f.getName())) {
+            getStateProducts(f, h);
+            aboutToShowThisContainer = null;
+            return h;
+        }
+
         if("Pay".equals(f.getName())) {
             getStatePay(f, h);
             aboutToShowThisContainer = null;
@@ -451,6 +543,10 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
+    protected void getStateProducts(Form f, Hashtable h) {
+    }
+
+
     protected void getStatePay(Form f, Hashtable h) {
     }
 
@@ -464,6 +560,12 @@ public abstract class StateMachineBase extends UIBuilder {
 
     protected void setFormState(Form f, Hashtable state) {
         super.setFormState(f, state);
+        if("Products".equals(f.getName())) {
+            setStateProducts(f, state);
+            aboutToShowThisContainer = null;
+            return;
+        }
+
         if("Pay".equals(f.getName())) {
             setStatePay(f, state);
             aboutToShowThisContainer = null;
@@ -486,6 +588,10 @@ public abstract class StateMachineBase extends UIBuilder {
     }
 
 
+    protected void setStateProducts(Form f, Hashtable state) {
+    }
+
+
     protected void setStatePay(Form f, Hashtable state) {
     }
 
@@ -502,10 +608,17 @@ public abstract class StateMachineBase extends UIBuilder {
         if("ComboBox".equals(listName)) {
             return initListModelComboBox(cmp);
         }
+        if("MultiList".equals(listName)) {
+            return initListModelMultiList(cmp);
+        }
         return super.setListModel(cmp);
     }
 
     protected boolean initListModelComboBox(List cmp) {
+        return false;
+    }
+
+    protected boolean initListModelMultiList(List cmp) {
         return false;
     }
 
@@ -518,6 +631,12 @@ public abstract class StateMachineBase extends UIBuilder {
             c = c.getParent().getLeadParent();
         }
         if(rootContainerName == null) return;
+        if(rootContainerName.equals("Products")) {
+            if("MultiList".equals(c.getName())) {
+                onProducts_MultiListAction(c, event);
+                return;
+            }
+        }
         if(rootContainerName.equals("Dest")) {
             if("Button".equals(c.getName())) {
                 onDest_ButtonAction(c, event);
@@ -529,6 +648,10 @@ public abstract class StateMachineBase extends UIBuilder {
                 onMain_OrderAction(c, event);
                 return;
             }
+            if("Button".equals(c.getName())) {
+                onMain_ButtonAction(c, event);
+                return;
+            }
             if("Quantity".equals(c.getName())) {
                 onMain_QuantityAction(c, event);
                 return;
@@ -537,12 +660,11 @@ public abstract class StateMachineBase extends UIBuilder {
                 onMain_ComboBoxAction(c, event);
                 return;
             }
-            if("Button".equals(c.getName())) {
-                onMain_ButtonAction(c, event);
-                return;
-            }
         }
     }
+
+      protected void onProducts_MultiListAction(Component c, ActionEvent event) {
+      }
 
       protected void onDest_ButtonAction(Component c, ActionEvent event) {
       }
@@ -550,13 +672,13 @@ public abstract class StateMachineBase extends UIBuilder {
       protected void onMain_OrderAction(Component c, ActionEvent event) {
       }
 
+      protected void onMain_ButtonAction(Component c, ActionEvent event) {
+      }
+
       protected void onMain_QuantityAction(Component c, ActionEvent event) {
       }
 
       protected void onMain_ComboBoxAction(Component c, ActionEvent event) {
-      }
-
-      protected void onMain_ButtonAction(Component c, ActionEvent event) {
       }
 
 }

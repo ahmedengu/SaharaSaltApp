@@ -95,8 +95,7 @@ public class StateMachine extends StateMachineBase {
         if (lastKnownLocation != null)
             destCoord = new Coord(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
         map.zoom(destCoord, 5);
-        if (!map.isNativeMaps())
-            updateMarkers(map);
+        updateMarkers(map);
         map.setShowMyLocation(true);
 
         map.addTapListener(new ActionListener() {

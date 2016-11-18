@@ -6,6 +6,8 @@
   </component>
   <component type="Container" name="Container" cloudDestinationProperty="Container" scrollableY="true" layout="BoxLayout" boxLayoutAxis="Y" >
     <layoutConstraint value="Center" />
+    <component type="Button" name="Button" cloudDestinationProperty="Button" commandName="Choose Dest" commandId="2" commandAction="Dest" commandBack="false" text="Choose Dest" >
+    </component>
     <component type="TextField" name="Quantity" cloudBoundProperty="text" cloudDestinationProperty="Quantity" text="" constraint="2" hint="Quantity" >
     </component>
     <component type="ComboBox" name="ComboBox" cloudDestinationProperty="ComboBox" >
@@ -13,7 +15,5 @@
       <stringItem value="10" />
       <stringItem value="20" />
     </component>
-    <component type="Button" name="Button" cloudDestinationProperty="Button" commandName="Choose Dest" commandId="2" commandAction="Dest" commandBack="false" text="Choose Dest" >
-    </component>
   </component>
-</component>
+<command name="Products" id="3" action="Products" backCommand="false" /></component>
